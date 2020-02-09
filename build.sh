@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build --tag test-app .
+sudo docker build -t test-app:v1 .

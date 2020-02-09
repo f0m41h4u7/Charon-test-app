@@ -1,21 +1,35 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: test-app
+spec:
+  selector:
+    app: test
+  externalIPs:
+  - 10.11.12.01
+  ports:
+  - protocol: TCP
+    port: 80 
+    targetPort: 1337
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: test-app
   labels:
-    app: test-app
+    app: test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: test-app
+      app: test
   template:
     metadata:
       labels:
-        app: test-app
+        app: test
     spec:
       containers:
-        - name: test-app
-          image: test-app
+        - name: test-server
+          image: test-app:v1
           ports:
-            - containerPort: 8080
+            - containerPort: 1337
