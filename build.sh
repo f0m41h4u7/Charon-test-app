@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build --tag app-golang .
+docker build --tag test-app .
