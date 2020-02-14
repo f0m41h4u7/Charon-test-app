@@ -25,7 +25,7 @@ func main() {
 	p.Use(r)
 
 	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, "Hello world!")
+		c.JSON(200, "It's version 2! Hello world!")
 	})
 	
 	r.Run(":1337") 

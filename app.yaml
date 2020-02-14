@@ -29,7 +29,7 @@ spec:
         app: test
     spec:
       containers:
-        - name: test-server
+        - name: test-app
           image: test-app:v1
           ports:
             - containerPort: 1337

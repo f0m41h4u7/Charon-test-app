@@ -1,0 +1,4 @@
+test*
+*.yaml
+.git*
+Dockerfile
