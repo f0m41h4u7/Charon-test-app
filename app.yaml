@@ -1,35 +1,8 @@
-kind: Service
-apiVersion: v1
+apiVersion: charon.charon.cr/v1alpha1
+kind: Charon
 metadata:
-  name: test-app
+  name: test-charon-app
 spec:
-  selector:
-    app: test
-  externalIPs:
-  - 10.11.12.01
-  ports:
-  - protocol: TCP
-    port: 80 
-    targetPort: 1337
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: test-app
-  labels:
-    app: test
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: test
-  template:
-    metadata:
-      labels:
-        app: test
-    spec:
-      containers:
-        - name: test-app
-          image: test-app:v1
-          ports:
-            - containerPort: 1337
+  registry: localhost:5000
+  image: test-app
+  version: latest

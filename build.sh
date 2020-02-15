@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo docker build -t test-app:v1 .
+docker build --tag localhost:5000/test-app:v1 .
