@@ -4,5 +4,5 @@ metadata:
   name: test-charon-app
 spec:
   registry: localhost:5000
-  image: test-app
-  version: latest
+  image: localhost:5000/test-app:v1
+  version: v1
