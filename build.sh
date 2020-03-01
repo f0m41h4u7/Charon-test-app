@@ -1,2 +1,3 @@
 #!/bin/bash
-docker build --tag localhost:30001/test-app .
+docker build --tag charon-registry:5000/test-app:v5 .
+docker push charon-registry:5000/test-app:v5
