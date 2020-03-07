@@ -6,9 +6,9 @@ import (
 )
 
 func main() {
-	gin.SetMode(gin.ReleaseMode)
+//	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
-	fmt.Println("!! Hello world from The New Version 5.0 of test app!! It works!")
+	fmt.Println("!! Hello world from The New Version 1.1 of test app!! It works!")
 
 	customMetrics := []*ginprometheus.Metric{
 		&ginprometheus.Metric{
@@ -22,7 +22,7 @@ func main() {
 	p.Use(r)
 
 	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, "It's new version!! 5.0 Hello world!")
+		c.JSON(200, "It's new version!! 1.1 Hello world!")
 	})
 
 	r.Run(":1337")
