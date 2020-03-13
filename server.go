@@ -3,7 +3,7 @@ package main
 import (
         "net/http"
         "time"
-	"log"
+        "log"
         "io/ioutil"
         "encoding/json"
         "github.com/prometheus/client_golang/prometheus"
@@ -12,7 +12,7 @@ import (
 )
 
 type Data struct {
-	Values	[]float64	`json:"values"`
+        Values  []float64       `json:"values"`
 }
 
 var dataset Data
@@ -20,7 +20,7 @@ var dataset Data
 func recordMetrics() {
         go func() {
                 for _, metric := range dataset.Values{
-			testMetric.Set(metric)
+                        testMetric.Set(metric)
                         time.Sleep(2 * time.Minute)
                 }
         }()
@@ -35,11 +35,11 @@ var (
 
 func main() {
         dat, err := ioutil.ReadFile("dataset.json")
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = json.Unmarshal([]byte(dat), &dataset)
-	if err != nil {
+        if err != nil {
+                log.Fatal(err)
+        }
+        err = json.Unmarshal([]byte(dat), &dataset)
+        if err != nil {
                 log.Fatal(err)
         }
 
