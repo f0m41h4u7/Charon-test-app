@@ -1,8 +1,6 @@
-apiVersion: charon.charon.cr/v1alpha1
-kind: Charon
+apiVersion: app.custom.cr/v1alpha1
+kind: App
 metadata:
   name: test-charon-app
 spec:
-  registry: localhost:5000
   image: localhost:5000/test-app:v1
-  version: v1
