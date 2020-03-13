@@ -1,6 +1,0 @@
-apiVersion: app.custom.cr/v1alpha1
-kind: App
-metadata:
-  name: test-charon-app
-spec:
-  image: localhost:5000/test-app:v1
