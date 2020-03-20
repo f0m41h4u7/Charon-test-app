@@ -1,5 +1,6 @@
 # Charon test app
 
 [![Go](https://img.shields.io/github/go-mod/go-version/f0m41h4u7/Charon-test-app?style=plastic)](https://github.com/f0m41h4u7/Charon-test-app/blob/master/go.mod)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Simple app written to test Charon.
+Simple app written to test [https://github.com/f0m41h4u7/Charon](Charon).
