@@ -20,13 +20,6 @@ type Data struct {
 
 var datasets []Data
 
-var (
-	testMetric = promauto.NewGauge(prometheus.GaugeOpts{
-		Name: "testMetrics",
-		Help: "Some test metrics",
-	})
-)
-
 func exposeMetrics() {
 	for i := 1; i < 4; i++ {
 		var d Data
@@ -44,14 +37,18 @@ func exposeMetrics() {
 
 func main() {
 	exposeMetrics()
-	for _, d := range datasets {
-		go func(d Data) {
+	for i, d := range datasets {
+		mt := promauto.NewGauge(prometheus.GaugeOpts{
+			Name: "testMetrics" + strconv.Itoa(i),
+			Help: "Some test metrics",
+		})
+		go func(d Data, mt *prometheus.Gauge) {
 			for _, metric := range d.Values {
-				testMetric.Set(metric)
+				(*mt).Set(metric)
 				log.Print("Set metric ", metric)
 				time.Sleep(2 * time.Minute)
 			}
-		}(d)
+		}(d, &mt)
 	}
 
 	http.Handle("/metrics", promhttp.Handler())
