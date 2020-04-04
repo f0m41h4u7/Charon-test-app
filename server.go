@@ -23,7 +23,7 @@ var datasets []Data
 func exposeMetrics() {
 	for i := 1; i < 4; i++ {
 		var d Data
-		dat, err := ioutil.ReadFile("datasets/dataset" + strconv.Itoa(i) + ".json")
+		dat, err := ioutil.ReadFile("/home/dataset" + strconv.Itoa(i) + ".json")
 		if err != nil {
 			log.Fatal(fmt.Errorf("Failed to read metrics dataset %d: %w\n", i, err))
 		}
