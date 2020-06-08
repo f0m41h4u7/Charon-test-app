@@ -1,46 +1,59 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
+	"time"
 
-	"github.com/gorilla/mux"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
-type Route struct {
-	Name        string
-	Method      string
-	Pattern     string
-	HandlerFunc http.HandlerFunc
+type Data struct {
+	Values []float64 `json:"values"`
 }
 
-func Index(w http.ResponseWriter, r *http.Request) {
-	//	fmt.Fprintf(w, "Hello World!")
-}
+var datasets []Data
 
-var route = Route{
-	"Index",
-	"GET",
-	"/",
-	Index,
-}
-
-func NewRouter() *mux.Router {
-	router := mux.NewRouter().StrictSlash(true)
-	handler := route.HandlerFunc
-
-	router.
-		Methods(route.Method).
-		Path(route.Pattern).
-		Name(route.Name).
-		Handler(handler)
-
-	return router
+func exposeMetrics() {
+	for i := 1; i < 4; i++ {
+		var d Data
+		dat, err := ioutil.ReadFile("/home/dataset" + strconv.Itoa(i) + ".json")
+		if err != nil {
+			log.Fatal(fmt.Errorf("Failed to read metrics dataset %d: %w\n", i, err))
+		}
+		err = json.Unmarshal([]byte(dat), &d)
+		if err != nil {
+			log.Fatal(fmt.Errorf("Failed to parse metrics dataset %d: %w\n", i, err))
+		}
+		datasets = append(datasets, d)
+	}
 }
 
 func main() {
-	log.Printf("Server started")
-	router := NewRouter()
+	exposeMetrics()
+	for i, d := range datasets {
+		mt := promauto.NewGauge(prometheus.GaugeOpts{
+			Name: "testMetrics" + strconv.Itoa(i),
+			Help: "Some test metrics",
+		})
+		go func(d Data, mt *prometheus.Gauge) {
+			for _, metric := range d.Values {
+				(*mt).Set(metric)
+				log.Print("Set metric ", metric)
+				time.Sleep(2 * time.Minute)
+			}
+		}(d, &mt)
+	}
 
-	log.Fatal(http.ListenAndServe(":1984", router))
+	http.Handle("/metrics", promhttp.Handler())
+	err := http.ListenAndServe(":1337", nil)
+	if err != nil {
+		log.Fatal(fmt.Errorf("Server error: %w\n", err))
+	}
 }

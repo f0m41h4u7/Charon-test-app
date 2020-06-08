@@ -14,7 +14,7 @@ require (
 	github.com/gorilla/mux v1.7.4
 	github.com/opencontainers/go-digest v1.0.0-rc1 // indirect
 	github.com/opencontainers/image-spec v1.0.1 // indirect
-	github.com/prometheus/client_golang v1.5.0 // indirect
+	github.com/prometheus/client_golang v1.5.0
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	golang.org/x/net v0.0.0-20190613194153-d28f0bde5980
 )
